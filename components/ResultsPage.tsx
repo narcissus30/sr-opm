@@ -5,6 +5,7 @@ import { useApp } from '@/hooks/use-app';
 import { PROGRAMS, Program } from '@/lib/data';
 import { motion } from 'motion/react';
 import { ArrowRight, Star, Clock, GraduationCap, IndianRupee, TrendingUp, Info, CheckCircle, Globe, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ROITooltip } from './ROITooltip';
 
 export default function ResultsPage() {
   const { quizAnswers, setView, setSelectedProgram, setShowExpertModal, currency, feedback, setFeedback } = useApp();
@@ -168,10 +169,9 @@ export default function ResultsPage() {
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="p-2 bg-gray-50 rounded-lg"><TrendingUp size={20} className="text-gray-400" /></div>
-                <div>
-                  <div className="text-xs text-gray-400 uppercase font-bold">ROI Score</div>
-                  <div className="font-bold text-accent">{topMatch.roiScore}/10</div>
+                <div className="p-2 bg-gray-50 rounded-lg">
+                  <div className="text-xs text-gray-400 uppercase font-bold mb-0.5">ROI Score</div>
+                  <ROITooltip score={topMatch.roiScore} iconSize={18} />
                 </div>
               </div>
               <div className="flex items-center space-x-3">
@@ -315,9 +315,8 @@ export default function ResultsPage() {
                     {currency === 'INR' ? <IndianRupee size={14} className="text-gray-400" /> : <Globe size={14} className="text-gray-400" />}
                     <span className="font-medium">{formatPrice(p)} · {formatEMI(p)}</span>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <TrendingUp size={14} className="text-accent" />
-                    <span className="font-bold text-accent">ROI Score: {p.roiScore}/10</span>
+                  <div className="flex items-center">
+                    <ROITooltip score={p.roiScore} iconSize={14} />
                   </div>
                 </div>
 

@@ -20,7 +20,6 @@ export default function Navbar() {
 
   const handleGoHome = () => {
     setView('home');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -29,17 +28,19 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <button 
+              type="button"
               onClick={handleGoHome}
-              className="flex items-center group cursor-pointer hover:opacity-90 transition-opacity"
+              className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-lg p-1 -m-1"
+              aria-label="Go to home"
             >
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl mr-2 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-xl shrink-0 group-hover:scale-105 transition-transform">
                 SR
               </div>
               <span className="text-2xl font-display font-bold text-primary tracking-tight">OPM</span>
             </button>
 
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-10">
+            {/* Desktop Nav - equal spacing, no Home/USD/INR */}
+            <div className="hidden md:flex items-center flex-1 justify-evenly max-w-2xl mx-auto">
               {navItems.map((item) => (
                 <button
                   key={item.name}
@@ -49,23 +50,22 @@ export default function Navbar() {
                   {item.name}
                 </button>
               ))}
-
-              <div className="flex items-center space-x-6 border-l pl-6 border-gray-200">
-                <button 
-                  onClick={() => setShowAuthModal(true)}
-                  className="flex items-center space-x-2 text-sm font-semibold text-primary hover:opacity-80 transition-opacity"
-                >
-                  <User size={18} />
-                  <span>{user.isLoggedIn ? 'Profile' : 'Login'}</span>
-                </button>
-                <button 
-                  onClick={() => setShowExpertModal(true)}
-                  className="bg-primary text-white px-5 py-2 rounded-full text-sm font-bold flex items-center space-x-2 hover:shadow-lg hover:-translate-y-0.5 transition-all"
-                >
-                  <Phone size={16} />
-                  <span>Talk to Expert</span>
-                </button>
-              </div>
+            </div>
+            <div className="hidden md:flex items-center gap-4">
+              <button 
+                onClick={() => setShowAuthModal(true)}
+                className="flex items-center space-x-2 text-sm font-semibold text-primary hover:opacity-80 transition-opacity"
+              >
+                <User size={18} />
+                <span>{user.isLoggedIn ? 'Profile' : 'Login'}</span>
+              </button>
+              <button 
+                onClick={() => setShowExpertModal(true)}
+                className="bg-primary text-white px-5 py-2 rounded-full text-sm font-bold flex items-center space-x-2 hover:shadow-lg hover:-translate-y-0.5 transition-all"
+              >
+                <Phone size={16} />
+                <span>Talk to Expert</span>
+              </button>
             </div>
 
             {/* Mobile Menu Button */}

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useApp } from '@/hooks/use-app';
-import { X, ArrowRight, IndianRupee, Clock, Shield, TrendingUp, ChevronUp, ChevronDown } from 'lucide-react';
+import { X, IndianRupee, Clock, Shield, TrendingUp, ChevronUp, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function CompareBar() {
@@ -30,18 +30,13 @@ export default function CompareBar() {
               </div>
               <span className="text-sm text-gray-400 hidden md:inline">(Max 3)</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <button 
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="flex items-center space-x-1 text-sm font-bold hover:text-accent transition-colors"
-              >
-                <span>{isExpanded ? 'Hide Details' : 'Show Comparison'}</span>
-                {isExpanded ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
-              </button>
-              <button className="bg-accent text-white px-6 py-2 rounded-lg font-bold text-sm hover:scale-105 transition-all">
-                Compare Now
-              </button>
-            </div>
+            <button 
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="flex items-center space-x-1 text-sm font-bold hover:text-accent transition-colors"
+            >
+              <span>{isExpanded ? 'Hide Details' : 'Show Comparison'}</span>
+              {isExpanded ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
+            </button>
           </div>
 
           {/* Comparison Content */}

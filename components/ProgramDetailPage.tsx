@@ -3,13 +3,14 @@
 import React from 'react';
 import { useApp } from '@/hooks/use-app';
 import { PROGRAMS, Program } from '@/lib/data';
-import { ArrowLeft, Clock, IndianRupee, TrendingUp, GraduationCap, CheckCircle, Calendar, Download, ChevronDown, Phone, Star, Users, Award, BookOpen, ArrowRight, Globe, Youtube, Instagram, ExternalLink, MessageSquare, UserCheck, Briefcase, Plus, HelpCircle } from 'lucide-react';
+import { ArrowLeft, Clock, IndianRupee, TrendingUp, GraduationCap, CheckCircle, Calendar, Download, Phone, Star, Users, Award, BookOpen, ArrowRight, Globe, Youtube, Instagram, MessageSquare, UserCheck, Briefcase, Plus } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import { ExpertModal, EmployerPitchModal, AskAlumniModal } from './Modals';
+import { ROITooltip } from './ROITooltip';
 
 export default function ProgramDetailPage() {
-  const { selectedProgram, setView, isQuizCompleted, quizAnswers, setShowExpertModal, setShowEmployerPitchModal, setShowAskAlumniModal, setSelectedProgram, currency, addToCompare } = useApp();
+  const { selectedProgram, setView, isQuizCompleted, quizAnswers, setShowExpertModal, setShowEmployerPitchModal, setShowAskAlumniModal, setSelectedProgram, currency, addToCompare, compareList } = useApp();
 
   if (!selectedProgram) return null;
 
@@ -93,19 +94,13 @@ export default function ProgramDetailPage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-6 items-center">
-              <div className="flex items-center space-x-2">
-                <Award className="text-secondary" size={20} />
-                <span className="text-sm font-bold text-primary">{p.accreditation.split(',')[0]}</span>
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex items-center gap-2">
+                <Award className="text-secondary shrink-0" size={18} />
+                <span className="text-sm font-semibold text-primary">{p.accreditation.split(',')[0]}</span>
               </div>
-              <div className="flex items-center space-x-2 relative group cursor-help">
-                <TrendingUp className="text-accent" size={20} />
-                <span className="text-sm font-bold text-primary">ROI Score: {p.roiScore}/10</span>
-                <HelpCircle size={14} className="text-gray-400" />
-                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-48 bg-gray-900 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-center">
-                  ROI Score is calculated based on Average Salary Hike vs Total Program Fee.
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-gray-900"></div>
-                </div>
+              <div className="flex items-center">
+                <ROITooltip score={p.roiScore} iconSize={18} />
               </div>
             </div>
           </div>
@@ -272,28 +267,27 @@ export default function ProgramDetailPage() {
           </section>
 
           <section>
-            <h2 className="text-3xl font-bold text-primary mb-8">Curriculum</h2>
+            <h2 className="text-3xl font-bold text-primary mb-6">Curriculum</h2>
+            <p className="text-gray-600 mb-6">Semester-wise breakdown of courses and topics.</p>
             <div className="grid md:grid-cols-2 gap-6">
               {p.curriculum.semester.map((sem, i) => (
-                <div key={i} className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm flex flex-col h-full">
-                  <div className="p-4 bg-gray-50 border-b border-gray-100 flex items-center">
-                    <span className="px-3 py-1 bg-secondary/20 text-secondary text-sm font-bold rounded-lg mr-3">
-                      {sem.title.split(':')[0] || `Semester ${i + 1}`}
+                <div key={i} className="bg-white rounded-xl border border-gray-200 overflow-hidden flex flex-col">
+                  <div className="px-4 py-3 bg-gray-50 border-b border-gray-100 flex flex-wrap items-center gap-2">
+                    <span className="px-2.5 py-1 bg-primary/10 text-primary text-xs font-bold rounded-md uppercase tracking-wide">
+                      {sem.title.split(':')[0].trim() || `Semester ${i + 1}`}
                     </span>
                     {sem.title.includes(':') && (
-                      <span className="text-sm font-bold text-primary">{sem.title.split(':')[1]}</span>
+                      <span className="text-sm font-semibold text-gray-700">{sem.title.split(':').slice(1).join(':').trim()}</span>
                     )}
                   </div>
-                  <div className="p-6 flex-1">
-                    <ul className="space-y-3">
-                      {sem.topics.map((topic, j) => (
-                        <li key={j} className="flex items-start space-x-3 text-gray-700">
-                          <div className="w-1.5 h-1.5 bg-gray-400 rounded-sm shrink-0 mt-2 transform rotate-45" />
-                          <span className="text-sm font-medium leading-relaxed">{topic}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ul className="p-4 space-y-2.5">
+                    {sem.topics.map((topic, j) => (
+                      <li key={j} className="flex items-start gap-2 text-gray-700 text-sm">
+                        <span className="text-primary shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-primary" />
+                        <span className="leading-snug">{topic}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ))}
             </div>
@@ -522,69 +516,47 @@ export default function ProgramDetailPage() {
           {/* Similar Programs */}
           {displayedSimilar.length > 0 && (
             <section>
-              <h2 className="text-3xl font-bold text-primary mb-8">Similar Programs</h2>
+              <h2 className="text-2xl font-bold text-primary mb-6">Similar Programs</h2>
               <div className="grid md:grid-cols-3 gap-6">
                 {displayedSimilar.map((simP) => (
-                  <div key={simP.id} className="bg-[#1A1A1A] rounded-2xl overflow-hidden shadow-xl hover:-translate-y-1 transition-transform border border-white/10 group flex flex-col relative">
-                    {/* Bestseller Badge */}
-                    {simP.roiScore >= 9.0 && (
-                      <div className="absolute top-4 left-4 z-10 px-2.5 py-1 bg-[#D4C4FF] text-[#1A1A1A] text-[10px] font-bold rounded-md uppercase tracking-wider shadow-sm">
-                        Bestseller
-                      </div>
-                    )}
-                    
-                    {/* Dark sleek header area */}
-                    <div className="h-40 bg-gradient-to-br from-[#2D2D2D] to-[#1A1A1A] relative p-6 flex flex-col justify-end">
-                      <div className="absolute top-4 right-4 w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1.5 shadow-lg">
+                  <div key={simP.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all flex flex-col">
+                    <div className="p-4 flex items-start justify-between gap-3 border-b border-gray-100">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-gray-100 shrink-0">
                         <Image src={simP.logo} alt={simP.university} fill className="object-contain p-1" referrerPolicy="no-referrer" />
                       </div>
+                      {simP.roiScore >= 9.0 && (
+                        <span className="px-2 py-0.5 bg-accent/15 text-accent text-xs font-semibold rounded-md">Bestseller</span>
+                      )}
                     </div>
-                    
-                    <div className="p-6 flex-1 flex flex-col">
-                      <div className="mb-2">
-                        <h3 className="text-lg font-bold text-white leading-tight mb-1 group-hover:text-[#4FE084] transition-colors line-clamp-2">{simP.name}</h3>
-                        <p className="text-sm font-medium text-[#4FE084]">{simP.university}</p>
-                      </div>
-                      
-                      <p className="text-xs text-gray-400 mb-4 line-clamp-2">
-                        Gain expertise in {simP.specialization} with flexible, professional formatting.
-                      </p>
-                      
-                      {/* Rating Component */}
-                      <div className="flex items-center space-x-1 mb-5">
-                        <span className="text-sm font-bold text-white mr-1">{simP.roiScore}</span>
-                        {[1,2,3,4,5].map((star) => (
-                          <Star key={star} size={12} className={star <= Math.round(simP.roiScore/2) ? "text-[#FFB800]" : "text-gray-600"} fill={star <= Math.round(simP.roiScore/2) ? "currentColor" : "none"} />
-                        ))}
-                        <span className="text-xs text-gray-500 ml-1">({Math.floor(Math.random() * 50) + 120})</span>
-                      </div>
-                      
-                      {/* Pricing with Strikethrough Effect */}
-                      <div className="mt-auto mb-6 flex items-end space-x-2">
-                        <div className="text-xl font-bold text-white">
-                          {currency === 'INR' ? simP.tuition : `$${(simP.tuitionUSD).toLocaleString()}`}
+                    <div className="p-4 flex-1 flex flex-col">
+                      <h3 className="text-base font-bold text-primary leading-tight mb-1 line-clamp-2">{simP.name} in {simP.specialization}</h3>
+                      <p className="text-sm text-gray-500 mb-3">{simP.university} · {simP.country}</p>
+                      <dl className="space-y-2 mb-4">
+                        <div className="flex justify-between text-sm">
+                          <dt className="text-gray-500">Fee</dt>
+                          <dd className="font-semibold text-primary">{currency === 'INR' ? simP.tuition : `$${(simP.tuitionUSD).toLocaleString()}`}</dd>
                         </div>
-                        <div className="text-sm font-medium text-gray-500 line-through pb-0.5">
-                          {currency === 'INR' ? `₹${(simP.tuitionValue * 1.2 / 100000).toFixed(1)}L` : `$${(simP.tuitionUSD * 1.2).toLocaleString()}`}
+                        <div className="flex justify-between items-center text-sm">
+                          <dt className="text-gray-500">ROI</dt>
+                          <dd><ROITooltip score={simP.roiScore} iconSize={12} /></dd>
                         </div>
-                      </div>
-
-                      <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                        <button 
-                          onClick={() => {
-                            setSelectedProgram(simP);
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                          }}
-                          className="bg-[#D4C4FF] text-[#1A1A1A] font-bold text-xs px-4 py-2 rounded-md hover:bg-white transition-colors"
+                        <div className="flex justify-between text-sm">
+                          <dt className="text-gray-500">Duration</dt>
+                          <dd className="text-gray-700">{simP.duration}</dd>
+                        </div>
+                      </dl>
+                      <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto">
+                        <button
+                          onClick={() => { setSelectedProgram(simP); setView('details'); }}
+                          className="text-secondary font-semibold text-sm hover:underline flex items-center gap-1"
                         >
-                          View Program
+                          View Program <ArrowRight size={14} />
                         </button>
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            addToCompare(simP);
-                          }}
-                          className="w-8 h-8 rounded-full border border-[#D4C4FF] text-[#D4C4FF] flex items-center justify-center hover:bg-[#D4C4FF] hover:text-[#1A1A1A] transition-colors"
+                        <button
+                          onClick={(e) => { e.stopPropagation(); addToCompare(simP); }}
+                          disabled={compareList?.some(item => item.id === simP.id)}
+                          className={`p-2 rounded-lg border text-sm ${compareList?.some(item => item.id === simP.id) ? 'bg-gray-100 text-gray-400 border-gray-100' : 'text-primary border-gray-200 hover:bg-primary hover:text-white'}`}
+                          title="Add to compare"
                         >
                           <Plus size={16} />
                         </button>
@@ -600,23 +572,23 @@ export default function ProgramDetailPage() {
         {/* Right Column: Sticky Sidebar */}
         <div className="hidden lg:block">
           <div className="sticky top-24 space-y-8">
-            <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
-              <h3 className="text-xl font-bold mb-6">Course Highlights</h3>
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Accreditation</span>
-                  <span className="font-bold text-right text-sm">{p.accreditation}</span>
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+              <h3 className="text-lg font-bold text-primary mb-4">Course Highlights</h3>
+              <dl className="space-y-4">
+                <div className="flex justify-between items-start gap-2">
+                  <dt className="text-sm text-gray-500">Accreditation</dt>
+                  <dd className="font-semibold text-sm text-primary text-right">{p.accreditation.split(',')[0]}</dd>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Weekly Effort</span>
-                  <span className="font-bold">{p.weeklyTime}/week</span>
+                <div className="flex justify-between items-center">
+                  <dt className="text-sm text-gray-500">Weekly Effort</dt>
+                  <dd className="font-semibold text-sm">{p.weeklyTime}/week</dd>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-500">ROI Score</span>
-                  <span className="font-bold text-accent">{p.roiScore}/10</span>
+                <div className="flex justify-between items-center gap-2">
+                  <dt className="text-sm text-gray-500">ROI Score</dt>
+                  <dd className="flex items-center"><ROITooltip score={p.roiScore} iconSize={14} /></dd>
                 </div>
-              </div>
-              <div className="mt-8 pt-8 border-t border-gray-100">
+              </dl>
+              <div className="mt-6 pt-6 border-t border-gray-100">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-gray-500">Total Program Fee</span>
                   <span className="text-2xl font-bold text-primary">{formatPrice(p)}</span>

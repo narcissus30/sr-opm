@@ -48,7 +48,11 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [view, setView] = useState<'home' | 'quiz' | 'results' | 'details' | 'listing'>('home');
+  const [view, setViewState] = useState<'home' | 'quiz' | 'results' | 'details' | 'listing'>('home');
+  const setView = (v: 'home' | 'quiz' | 'results' | 'details' | 'listing') => {
+    setViewState(v);
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>({});
   const [user, setUser] = useState<UserProfile>({ fullName: '', email: '', phone: '', isLoggedIn: false });

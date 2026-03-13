@@ -138,19 +138,26 @@ export const PROGRAMS: Program[] = [
           ] 
         },
         { 
-          title: "Semester 3", 
+          title: "Semester 3: Analytics & Strategy", 
           topics: [
             "Cloud Computing", 
             "Machine Learning Algorithms",
-            "Deep Learning Frameworks"
+            "Deep Learning Frameworks",
+            "Business Intelligence & Reporting",
+            "Predictive Analytics",
+            "Strategic Management",
+            "Capstone Project - I"
           ] 
         },
         { 
-          title: "Semester 4", 
+          title: "Semester 4: Capstone & Ethics", 
           topics: [
             "Industry Sponsored Project", 
             "Professional Ethics",
-            "Research Methodology"
+            "Research Methodology",
+            "Leadership & Change Management",
+            "Global Business Environment",
+            "Final Dissertation & Viva"
           ] 
         }
       ]
