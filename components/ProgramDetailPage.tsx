@@ -49,10 +49,10 @@ export default function ProgramDetailPage() {
         <span>Back to {isQuizCompleted ? 'Recommendations' : 'Programs'}</span>
       </button>
 
-      {/* Hero Section */}
-      <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 mb-12 overflow-hidden relative">
-        <div className="grid lg:grid-cols-3 gap-12 relative z-10">
-          <div className="lg:col-span-2">
+      {/* Hero Section - items-start to avoid empty space below accreditation/ROI */}
+      <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 mb-8 overflow-hidden relative">
+        <div className="grid lg:grid-cols-3 gap-12 relative z-10 items-start">
+          <div className="lg:col-span-2 min-w-0">
             <div className="flex items-center space-x-3 mb-6">
               <span className="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">
                 {p.field}
@@ -94,7 +94,7 @@ export default function ProgramDetailPage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-4 pt-2 mb-0">
               <div className="flex items-center gap-2">
                 <Award className="text-secondary shrink-0" size={18} />
                 <span className="text-sm font-semibold text-primary">{p.accreditation.split(',')[0]}</span>
@@ -104,7 +104,7 @@ export default function ProgramDetailPage() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-primary rounded-3xl p-8 text-white flex flex-col justify-between shadow-2xl shadow-primary/20">
             <div>
               <div className="text-accent font-bold text-sm uppercase tracking-widest mb-4">Admissions Open</div>
@@ -519,7 +519,7 @@ export default function ProgramDetailPage() {
               <h2 className="text-2xl font-bold text-primary mb-6">Similar Programs</h2>
               <div className="grid md:grid-cols-3 gap-6">
                 {displayedSimilar.map((simP) => (
-                  <div key={simP.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-gray-300 transition-all flex flex-col">
+                  <div key={simP.id} className="bg-white rounded-xl border border-gray-200 overflow-visible hover:shadow-lg hover:border-primary/20 transition-all flex flex-col">
                     <div className="p-4 flex items-start justify-between gap-3 border-b border-gray-100">
                       <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-gray-100 shrink-0">
                         <Image src={simP.logo} alt={simP.university} fill className="object-contain p-1" referrerPolicy="no-referrer" />
@@ -545,7 +545,7 @@ export default function ProgramDetailPage() {
                           <dd className="text-gray-700">{simP.duration}</dd>
                         </div>
                       </dl>
-                      <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-auto">
+                      <div className="flex items-center justify-between pt-3 pb-4 border-t border-gray-100 mt-auto">
                         <button
                           onClick={() => { setSelectedProgram(simP); setView('details'); }}
                           className="text-secondary font-semibold text-sm hover:underline flex items-center gap-1"

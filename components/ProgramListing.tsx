@@ -36,9 +36,14 @@ export default function ProgramListing() {
 
   const fields = ['All', ...Array.from(new Set(PROGRAMS.map(p => p.field)))];
 
+  const searchLower = searchQuery.trim().toLowerCase();
   const filteredPrograms = PROGRAMS.filter(p => {
-    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         p.university.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = !searchLower ||
+      p.name.toLowerCase().includes(searchLower) ||
+      p.university.toLowerCase().includes(searchLower) ||
+      p.specialization.toLowerCase().includes(searchLower) ||
+      p.field.toLowerCase().includes(searchLower) ||
+      p.country.toLowerCase().includes(searchLower);
     const matchesField = selectedField === 'All' || p.field === selectedField;
     const feeRange = FEE_RANGES.find(f => f.id === selectedFee) || FEE_RANGES[0];
     const matchesFee = p.tuitionValue >= feeRange.min && p.tuitionValue < feeRange.max;
@@ -163,19 +168,29 @@ export default function ProgramListing() {
         </div>
       </div>
 
-      {/* Grid - readable cards */}
+      {/* No results message */}
+      {filteredPrograms.length === 0 && (
+        <div className="text-center py-16 px-4 bg-gray-50 rounded-2xl border border-gray-100">
+          <p className="text-gray-600 font-medium mb-1">No programs match your search or filters.</p>
+          <p className="text-sm text-gray-500">Try different keywords (e.g. program name, university, or field) or clear some filters.</p>
+        </div>
+      )}
+
+      {/* Grid - readable cards with elegant styling */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredPrograms.map((p) => (
-          <div key={p.id} className="bg-white rounded-xl border border-gray-200 p-0 hover:shadow-lg hover:border-gray-300 transition-all flex flex-col overflow-hidden">
+          <div key={p.id} className="group relative bg-white rounded-xl border border-gray-200/80 p-0 hover:shadow-xl hover:border-primary/20 hover:shadow-primary/5 transition-all duration-200 flex flex-col overflow-visible">
+            {/* Subtle left accent */}
+            <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-xl bg-gradient-to-b from-primary/40 to-secondary/30 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="px-5 pt-5 flex justify-between items-start gap-3">
-              <span className="px-2.5 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-md uppercase tracking-wide">
+              <span className="px-2.5 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-md uppercase tracking-wide border border-primary/10">
                 {p.field}
               </span>
-              <div className="flex items-center gap-1.5 shrink-0">
+              <div className="flex items-center gap-1.5 shrink-0 relative z-10">
                 <ROITooltip score={p.roiScore} iconSize={14} />
               </div>
             </div>
-            <div className="px-5 pt-3 flex-1">
+            <div className="px-5 pt-3 flex-1 pb-6">
               <h3 className="text-lg font-bold text-primary mb-1 leading-tight">
                 {p.name} in {p.specialization}
               </h3>
@@ -196,7 +211,7 @@ export default function ProgramListing() {
                   <dd className="text-sm text-gray-700">{p.duration} · {p.weeklyTime}/wk</dd>
                 </div>
               </dl>
-              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+              <div className="flex items-center justify-between pt-4 pb-1 border-t border-gray-100">
                 <button
                   onClick={() => { setSelectedProgram(p); setView('details'); }}
                   className="text-secondary font-semibold text-sm flex items-center gap-1 hover:underline"
