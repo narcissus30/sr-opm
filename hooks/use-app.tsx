@@ -35,6 +35,10 @@ interface AppContextType {
   setIsQuizCompleted: (v: boolean) => void;
   showExpertModal: boolean;
   setShowExpertModal: (v: boolean) => void;
+  showEmployerPitchModal: boolean;
+  setShowEmployerPitchModal: (v: boolean) => void;
+  showAskAlumniModal: boolean;
+  setShowAskAlumniModal: (v: boolean) => void;
   currency: 'INR' | 'USD';
   setCurrency: (c: 'INR' | 'USD') => void;
   feedback: Record<string, 'like' | 'dislike' | null>;
@@ -51,6 +55,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [compareList, setCompareList] = useState<Program[]>([]);
   const [isQuizCompleted, setIsQuizCompleted] = useState(false);
   const [showExpertModal, setShowExpertModal] = useState(false);
+  const [showEmployerPitchModal, setShowEmployerPitchModal] = useState(false);
+  const [showAskAlumniModal, setShowAskAlumniModal] = useState(false);
   const [currency, setCurrency] = useState<'INR' | 'USD'>('INR');
   const [feedback, setFeedbackState] = useState<Record<string, 'like' | 'dislike' | null>>({});
 
@@ -77,6 +83,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       compareList, addToCompare, removeFromCompare,
       isQuizCompleted, setIsQuizCompleted,
       showExpertModal, setShowExpertModal,
+      showEmployerPitchModal, setShowEmployerPitchModal,
+      showAskAlumniModal, setShowAskAlumniModal,
       currency, setCurrency,
       feedback, setFeedback
     }}>

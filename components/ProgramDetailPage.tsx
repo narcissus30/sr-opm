@@ -3,12 +3,13 @@
 import React from 'react';
 import { useApp } from '@/hooks/use-app';
 import { PROGRAMS, Program } from '@/lib/data';
-import { ArrowLeft, Clock, IndianRupee, TrendingUp, GraduationCap, CheckCircle, Calendar, Download, ChevronDown, Phone, Star, Users, Award, BookOpen, ArrowRight, Globe, Youtube, Instagram, ExternalLink, MessageSquare, UserCheck, Briefcase } from 'lucide-react';
+import { ArrowLeft, Clock, IndianRupee, TrendingUp, GraduationCap, CheckCircle, Calendar, Download, ChevronDown, Phone, Star, Users, Award, BookOpen, ArrowRight, Globe, Youtube, Instagram, ExternalLink, MessageSquare, UserCheck, Briefcase, Plus, HelpCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
+import { ExpertModal, EmployerPitchModal, AskAlumniModal } from './Modals';
 
 export default function ProgramDetailPage() {
-  const { selectedProgram, setView, isQuizCompleted, quizAnswers, setShowExpertModal, setSelectedProgram, currency } = useApp();
+  const { selectedProgram, setView, isQuizCompleted, quizAnswers, setShowExpertModal, setShowEmployerPitchModal, setShowAskAlumniModal, setSelectedProgram, currency, addToCompare } = useApp();
 
   if (!selectedProgram) return null;
 
@@ -97,9 +98,14 @@ export default function ProgramDetailPage() {
                 <Award className="text-secondary" size={20} />
                 <span className="text-sm font-bold text-primary">{p.accreditation.split(',')[0]}</span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 relative group cursor-help">
                 <TrendingUp className="text-accent" size={20} />
                 <span className="text-sm font-bold text-primary">ROI Score: {p.roiScore}/10</span>
+                <HelpCircle size={14} className="text-gray-400" />
+                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-48 bg-gray-900 text-white text-[10px] p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-center">
+                  ROI Score is calculated based on Average Salary Hike vs Total Program Fee.
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-gray-900"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -120,6 +126,28 @@ export default function ProgramDetailPage() {
               <button className="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center space-x-2">
                 <Download size={18} />
                 <span>Download Brochure</span>
+              </button>
+            </div>
+            
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="flex -space-x-3">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-primary overflow-hidden relative">
+                       <Image src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" fill className="object-cover" referrerPolicy="no-referrer" />
+                    </div>
+                  ))}
+                  <div className="w-8 h-8 rounded-full border-2 border-primary bg-white/20 flex items-center justify-center text-[10px] font-bold">
+                    +39
+                  </div>
+                </div>
+                <div className="text-sm font-medium">
+                  <span className="font-bold">42 professionals</span> from India are shortlisting this cohort
+                </div>
+              </div>
+              <button className="w-full bg-white/5 hover:bg-white/10 border border-white/20 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center space-x-2 text-sm">
+                <MessageSquare size={16} />
+                <span>Join Explorer Group (WhatsApp)</span>
               </button>
             </div>
           </div>
@@ -245,27 +273,90 @@ export default function ProgramDetailPage() {
 
           <section>
             <h2 className="text-3xl font-bold text-primary mb-8">Curriculum</h2>
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-6">
               {p.curriculum.semester.map((sem, i) => (
-                <details key={i} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden">
-                  <summary className="flex justify-between items-center p-6 cursor-pointer font-bold text-lg list-none hover:bg-gray-50 transition-colors">
-                    {sem.title}
-                    <span className="transition-transform group-open:rotate-180">
-                      <ChevronDown />
+                <div key={i} className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm flex flex-col h-full">
+                  <div className="p-4 bg-gray-50 border-b border-gray-100 flex items-center">
+                    <span className="px-3 py-1 bg-secondary/20 text-secondary text-sm font-bold rounded-lg mr-3">
+                      {sem.title.split(':')[0] || `Semester ${i + 1}`}
                     </span>
-                  </summary>
-                  <div className="px-6 pb-6">
-                    <ul className="grid md:grid-cols-2 gap-3">
+                    {sem.title.includes(':') && (
+                      <span className="text-sm font-bold text-primary">{sem.title.split(':')[1]}</span>
+                    )}
+                  </div>
+                  <div className="p-6 flex-1">
+                    <ul className="space-y-3">
                       {sem.topics.map((topic, j) => (
-                        <li key={j} className="flex items-center space-x-2 text-gray-600">
-                          <div className="w-1.5 h-1.5 bg-secondary rounded-full" />
-                          <span>{topic}</span>
+                        <li key={j} className="flex items-start space-x-3 text-gray-700">
+                          <div className="w-1.5 h-1.5 bg-gray-400 rounded-sm shrink-0 mt-2 transform rotate-45" />
+                          <span className="text-sm font-medium leading-relaxed">{topic}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                </details>
+                </div>
               ))}
+            </div>
+          </section>
+
+          {/* Day 1 Readiness Resume Scanner */}
+          <section className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full -mr-32 -mt-32 blur-3xl" />
+            
+            <div className="relative z-10 flex flex-col md:flex-row gap-8 items-start">
+              <div className="flex-1 space-y-4">
+                <h2 className="text-3xl font-bold text-primary flex items-center space-x-3">
+                  <Star className="text-accent" fill="currentColor" />
+                  <span>&quot;Day 1 Readiness&quot; Check</span>
+                </h2>
+                <p className="text-gray-600 leading-relaxed">
+                  Upload your resume or connect LinkedIn to see how your current technical skills match against the program&apos;s prerequisites. We&apos;ll help you bridge any gaps before the cohort starts.
+                </p>
+                
+                <div className="pt-4 flex flex-col sm:flex-row gap-4">
+                  <button 
+                    onClick={() => {
+                      const scanner = document.getElementById('scanner-state');
+                      if (scanner) {
+                        scanner.innerHTML = '<div class="text-secondary font-bold flex items-center space-x-2"><svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-secondary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Scanning profile against curriculum...</div>';
+                        setTimeout(() => {
+                           scanner.innerHTML = `
+                             <div class="space-y-4 w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
+                               <div class="flex items-center justify-between">
+                                 <span class="font-bold text-primary">Readiness Score</span>
+                                 <span class="font-bold text-green-600 text-xl">85%</span>
+                               </div>
+                               <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                 <div class="h-full bg-green-500 rounded-full" style="width: 85%"></div>
+                               </div>
+                               <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 flex items-start space-x-3 mt-4">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                 <div>
+                                   <div class="font-bold text-blue-900 text-sm">Python basics needed</div>
+                                   <div class="text-xs text-blue-800 mt-1">Your logic skills are great, but the curriculum uses Python. Here is a <a href="#" class="font-bold underline">free 5-hour bridge course</a> to take before August.</div>
+                                 </div>
+                               </div>
+                             </div>
+                           `;
+                        }, 2500);
+                      }
+                    }}
+                    className="flex-1 bg-white border-2 border-dashed border-gray-300 hover:border-secondary hover:bg-secondary/5 text-primary text-sm font-bold py-4 rounded-xl transition-all flex flex-col items-center justify-center gap-2 group cursor-pointer"
+                  >
+                    <Download className="text-gray-400 group-hover:text-secondary" />
+                    <span>Upload Resume (PDF)</span>
+                  </button>
+                  <button className="flex-1 bg-[#0077b5] text-white text-sm font-bold py-4 rounded-xl transition-all flex items-center justify-center space-x-2 hover:bg-[#006396] shadow-md">
+                     <span>Connect LinkedIn</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="w-full md:w-64 bg-gray-50 rounded-2xl p-6 border border-gray-100 min-h-[200px] flex items-center justify-center" id="scanner-state">
+                  <div className="text-center text-gray-400 text-sm">
+                    Upload your profile to see your readiness score.
+                  </div>
+              </div>
             </div>
           </section>
 
@@ -303,7 +394,7 @@ export default function ProgramDetailPage() {
                     <Briefcase size={20} className="text-secondary" />
                     <span>Career Transitions After Program</span>
                   </h4>
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid md:grid-cols-2 gap-4 mb-6">
                     {p.careerTransitions.map((t, i) => (
                       <div key={i} className="bg-white p-4 rounded-xl border border-gray-100 flex items-center justify-between shadow-sm">
                         <div className="text-sm font-medium text-gray-500">{t.before}</div>
@@ -311,6 +402,32 @@ export default function ProgramDetailPage() {
                         <div className="text-sm font-bold text-primary">{t.after}</div>
                       </div>
                     ))}
+                  </div>
+                  
+                  {/* Transition Match Alumni Card */}
+                  <div className="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col md:flex-row items-center md:items-start justify-between gap-6 shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+                    <div className="flex items-start space-x-5 relative z-10 w-full">
+                      <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-sm relative">
+                        <Image src="https://picsum.photos/seed/rohan/100/100" alt="Alumnus" fill className="object-cover" referrerPolicy="no-referrer" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-1">
+                          <h4 className="font-bold text-primary text-lg">Meet Rohan</h4>
+                          <span className="bg-green-100 text-green-700 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full">Alumni</span>
+                        </div>
+                        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                          He went from <span className="font-bold text-primary">QA Engineer</span> to <span className="font-bold text-secondary">ML Engineer</span> through this exact program in 2024.
+                        </p>
+                        <button 
+                          onClick={() => setShowAskAlumniModal(true)}
+                          className="flex items-center space-x-2 text-primary font-bold bg-gray-50 hover:bg-gray-100 border border-gray-200 px-4 py-2 rounded-xl text-sm transition-colors"
+                        >
+                          <MessageSquare size={16} className="text-secondary" />
+                          <span>Request a 15-min AMA</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
@@ -407,48 +524,71 @@ export default function ProgramDetailPage() {
             <section>
               <h2 className="text-3xl font-bold text-primary mb-8">Similar Programs</h2>
               <div className="grid md:grid-cols-3 gap-6">
-                {displayedSimilar.map((sp) => (
-                  <div 
-                    key={sp.id} 
-                    className="bg-white rounded-3xl border border-gray-100 p-6 hover:shadow-2xl transition-all cursor-pointer flex flex-col group"
-                    onClick={() => {
-                      setSelectedProgram(sp);
-                      window.scrollTo(0, 0);
-                    }}
-                  >
-                    <div className="flex justify-between items-start mb-6">
-                      <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-gray-50 bg-white p-2">
-                        <Image src={sp.logo} alt={sp.university} fill className="object-contain" referrerPolicy="no-referrer" />
+                {displayedSimilar.map((simP) => (
+                  <div key={simP.id} className="bg-[#1A1A1A] rounded-2xl overflow-hidden shadow-xl hover:-translate-y-1 transition-transform border border-white/10 group flex flex-col relative">
+                    {/* Bestseller Badge */}
+                    {simP.roiScore >= 9.0 && (
+                      <div className="absolute top-4 left-4 z-10 px-2.5 py-1 bg-[#D4C4FF] text-[#1A1A1A] text-[10px] font-bold rounded-md uppercase tracking-wider shadow-sm">
+                        Bestseller
                       </div>
-                      <div className="flex items-center space-x-1 bg-accent/10 text-accent px-2 py-1 rounded-lg">
-                        <TrendingUp size={12} />
-                        <span className="text-[10px] font-bold">ROI: {sp.roiScore}</span>
+                    )}
+                    
+                    {/* Dark sleek header area */}
+                    <div className="h-40 bg-gradient-to-br from-[#2D2D2D] to-[#1A1A1A] relative p-6 flex flex-col justify-end">
+                      <div className="absolute top-4 right-4 w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1.5 shadow-lg">
+                        <Image src={simP.logo} alt={simP.university} fill className="object-contain p-1" referrerPolicy="no-referrer" />
                       </div>
                     </div>
                     
-                    <h4 className="font-bold text-primary mb-1 line-clamp-2 group-hover:text-secondary transition-colors">
-                      {sp.name} in {sp.specialization}
-                    </h4>
-                    <p className="text-xs text-gray-400 mb-6">{sp.university} · {sp.country}</p>
-                    
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-6 h-6 bg-gray-50 rounded-lg flex items-center justify-center text-gray-400">
-                          {currency === 'INR' ? <IndianRupee size={12} /> : <Globe size={12} />}
-                        </div>
-                        <div className="text-xs font-bold text-primary">{formatPrice(sp)}</div>
+                    <div className="p-6 flex-1 flex flex-col">
+                      <div className="mb-2">
+                        <h3 className="text-lg font-bold text-white leading-tight mb-1 group-hover:text-[#4FE084] transition-colors line-clamp-2">{simP.name}</h3>
+                        <p className="text-sm font-medium text-[#4FE084]">{simP.university}</p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-6 h-6 bg-gray-50 rounded-lg flex items-center justify-center text-gray-400">
-                          <Clock size={12} />
-                        </div>
-                        <div className="text-xs font-bold text-primary">{sp.duration}</div>
+                      
+                      <p className="text-xs text-gray-400 mb-4 line-clamp-2">
+                        Gain expertise in {simP.specialization} with flexible, professional formatting.
+                      </p>
+                      
+                      {/* Rating Component */}
+                      <div className="flex items-center space-x-1 mb-5">
+                        <span className="text-sm font-bold text-white mr-1">{simP.roiScore}</span>
+                        {[1,2,3,4,5].map((star) => (
+                          <Star key={star} size={12} className={star <= Math.round(simP.roiScore/2) ? "text-[#FFB800]" : "text-gray-600"} fill={star <= Math.round(simP.roiScore/2) ? "currentColor" : "none"} />
+                        ))}
+                        <span className="text-xs text-gray-500 ml-1">({Math.floor(Math.random() * 50) + 120})</span>
                       </div>
-                    </div>
+                      
+                      {/* Pricing with Strikethrough Effect */}
+                      <div className="mt-auto mb-6 flex items-end space-x-2">
+                        <div className="text-xl font-bold text-white">
+                          {currency === 'INR' ? simP.tuition : `$${(simP.tuitionUSD).toLocaleString()}`}
+                        </div>
+                        <div className="text-sm font-medium text-gray-500 line-through pb-0.5">
+                          {currency === 'INR' ? `₹${(simP.tuitionValue * 1.2 / 100000).toFixed(1)}L` : `$${(simP.tuitionUSD * 1.2).toLocaleString()}`}
+                        </div>
+                      </div>
 
-                    <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between text-secondary font-bold text-sm">
-                      <span>View Details</span>
-                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                      <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                        <button 
+                          onClick={() => {
+                            setSelectedProgram(simP);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="bg-[#D4C4FF] text-[#1A1A1A] font-bold text-xs px-4 py-2 rounded-md hover:bg-white transition-colors"
+                        >
+                          View Program
+                        </button>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addToCompare(simP);
+                          }}
+                          className="w-8 h-8 rounded-full border border-[#D4C4FF] text-[#D4C4FF] flex items-center justify-center hover:bg-[#D4C4FF] hover:text-[#1A1A1A] transition-colors"
+                        >
+                          <Plus size={16} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -482,6 +622,15 @@ export default function ProgramDetailPage() {
                   <span className="text-2xl font-bold text-primary">{formatPrice(p)}</span>
                 </div>
                 <p className="text-xs text-gray-400 mb-6">*Inclusive of all taxes. No-cost EMI available.</p>
+                
+                <button 
+                  onClick={() => setShowEmployerPitchModal(true)}
+                  className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-3 rounded-xl transition-all flex items-center justify-center space-x-2 text-sm mb-4 border border-blue-200"
+                >
+                  <Briefcase size={16} />
+                  <span>Ask employer to sponsor</span>
+                </button>
+
                 <button 
                   onClick={() => setShowExpertModal(true)}
                   className="w-full btn-secondary py-4 mb-4"
@@ -513,6 +662,9 @@ export default function ProgramDetailPage() {
           </div>
         </div>
       </div>
+      <ExpertModal />
+      <EmployerPitchModal />
+      <AskAlumniModal />
     </div>
   );
 }

@@ -116,15 +116,42 @@ export const PROGRAMS: Program[] = [
       semester: [
         { 
           title: "Semester 1", 
-          topics: ["Marketing Management", "Business Economics", "Organizational Behavior", "Accounting for Managers", "Business Communication", "Quantitative Methods"] 
+          topics: [
+            "Fundamentals of Computer", 
+            "Fundamental of Mathematics",
+            "Discrete Mathematics and Graph Theory",
+            "Python Programming",
+            "Relational Database Management System",
+            "Data Visualization",
+            "Relational Database Management - Lab"
+          ] 
         },
         { 
           title: "Semester 2", 
-          topics: ["Financial Management", "Operations Management", "Business Analytics", "Human Resource Management", "Digital Transformation", "Market Research"] 
+          topics: [
+            "Computer Networks & Protocols", 
+            "Object Oriented Programming using JAVA",
+            "Operating System",
+            "Data Structure and Algorithms",
+            "Computer Architecture",
+            "Object Oriented Programming using JAVA - Lab"
+          ] 
         },
         { 
           title: "Semester 3", 
-          topics: ["Strategic Management", "Data Visualization", "Predictive Modeling", "Supply Chain Analytics", "Business Ethics", "Capstone Project"] 
+          topics: [
+            "Cloud Computing", 
+            "Machine Learning Algorithms",
+            "Deep Learning Frameworks"
+          ] 
+        },
+        { 
+          title: "Semester 4", 
+          topics: [
+            "Industry Sponsored Project", 
+            "Professional Ethics",
+            "Research Methodology"
+          ] 
         }
       ]
     },
@@ -238,19 +265,51 @@ export const PROGRAMS: Program[] = [
       semester: [
         { 
           title: "Semester 1", 
-          topics: ["Programming in C", "Data Structures", "Computer Organization", "Discrete Mathematics", "Web Technologies", "Communication Skills"] 
+          topics: [
+            "Fundamentals of Computer", 
+            "Fundamental of Mathematics",
+            "Discrete Mathematics and Graph Theory",
+            "Python Programming",
+            "Programming & Problem-Solving using C",
+            "Relational Database Management System",
+            "Data Visualization",
+            "Relational Database Management - Lab",
+            "Programming & Problem-Solving using C - Lab",
+            "Python Programming - Lab"
+          ] 
         },
         { 
-          title: "Semester 2", 
-          topics: ["Database Management", "Software Engineering", "Operating Systems", "Object Oriented Programming (Java)", "Computer Networks", "Design and Analysis of Algorithms"] 
+          title: "Semester 2: Core Subjects", 
+          topics: [
+            "Computer Networks & Protocols", 
+            "Object Oriented Programming using JAVA",
+            "Operating System",
+            "Data Structure and Algorithms",
+            "Computer Architecture",
+            "Object Oriented Programming using JAVA - Lab",
+            "Data Structure and Algorithms - Lab",
+            "Fundamentals of Artificial Intelligence"
+          ] 
         },
         { 
-          title: "Semester 3", 
-          topics: ["AI & Expert Systems", "Machine Learning", "Cloud Computing", "Python for Data Science", "Information Security", "Mobile Application Development"] 
+          title: "Semester 3: Specializations", 
+          topics: [
+            "Cloud Computing", 
+            "Machine Learning Algorithms",
+            "Deep Learning Frameworks",
+            "Cybersecurity Fundamentals",
+            "Advanced Database Systems - Lab"
+          ] 
         },
         { 
-          title: "Semester 4", 
-          topics: ["Big Data Analytics", "Deep Learning", "Internet of Things", "Natural Language Processing", "Software Project Management", "Final Project Work"] 
+          title: "Semester 4: Capstone", 
+          topics: [
+            "Industry Sponsored Project", 
+            "Professional Ethics",
+            "Research Methodology",
+            "Technical Report Writing",
+            "Final Project Defense"
+          ] 
         }
       ]
     },
@@ -581,11 +640,42 @@ export const PROGRAMS: Program[] = [
       semester: [
         { 
           title: "Semester 1", 
-          topics: ["Product Strategy", "User Research", "Agile Methodologies", "Market Analysis", "Design Thinking", "Product Lifecycle"] 
+          topics: [
+            "Fundamentals of Computer", 
+            "Fundamental of Mathematics",
+            "Discrete Mathematics and Graph Theory",
+            "Python Programming",
+            "Relational Database Management System",
+            "Data Visualization",
+            "Relational Database Management - Lab"
+          ] 
         },
         { 
           title: "Semester 2", 
-          topics: ["Product Analytics", "UX/UI for PMs", "Tech for Non-Tech", "Product Marketing", "Leadership & Influence", "Capstone Project"] 
+          topics: [
+            "Computer Networks & Protocols", 
+            "Object Oriented Programming using JAVA",
+            "Operating System",
+            "Data Structure and Algorithms",
+            "Computer Architecture",
+            "Object Oriented Programming using JAVA - Lab"
+          ] 
+        },
+        { 
+          title: "Semester 3", 
+          topics: [
+            "Cloud Computing", 
+            "Machine Learning Algorithms",
+            "Deep Learning Frameworks"
+          ] 
+        },
+        { 
+          title: "Semester 4", 
+          topics: [
+            "Industry Sponsored Project", 
+            "Professional Ethics",
+            "Research Methodology"
+          ] 
         }
       ]
     },
