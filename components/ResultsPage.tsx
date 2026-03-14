@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { useApp } from '@/hooks/use-app';
 import { PROGRAMS, Program } from '@/lib/data';
 import { motion } from 'motion/react';
@@ -8,7 +9,8 @@ import { ArrowRight, Star, Clock, GraduationCap, IndianRupee, TrendingUp, Info, 
 import { ROITooltip } from './ROITooltip';
 
 export default function ResultsPage() {
-  const { quizAnswers, setView, setSelectedProgram, setShowExpertModal, currency, feedback, setFeedback } = useApp();
+  const router = useRouter();
+  const { quizAnswers, setSelectedProgram, setShowExpertModal, currency, feedback, setFeedback, addToCompare } = useApp();
 
   const getFitLabel = (score: number) => {
     if (score >= 90) return { label: 'Excellent Fit', color: 'text-accent', bg: 'bg-accent/10' };
@@ -187,7 +189,7 @@ export default function ResultsPage() {
                 <button 
                   onClick={() => {
                     setSelectedProgram(topMatch);
-                    setView('details');
+                    router.push(`/programs/${topMatch.id}`);
                   }}
                   className="btn-secondary px-8 py-4"
                 >
@@ -325,7 +327,7 @@ export default function ResultsPage() {
                     <button 
                       onClick={() => {
                         setSelectedProgram(p);
-                        setView('details');
+                        router.push(`/programs/${p.id}`);
                       }}
                       className="text-secondary font-bold flex items-center space-x-1 hover:underline"
                     >
@@ -347,7 +349,7 @@ export default function ResultsPage() {
                       </button>
                     </div>
                   </div>
-                  <button className="text-gray-400 hover:text-primary font-medium text-sm">Compare</button>
+                  <button type="button" onClick={() => addToCompare(p)} className="text-gray-400 hover:text-primary font-medium text-sm">Compare</button>
                 </div>
               </div>
             );

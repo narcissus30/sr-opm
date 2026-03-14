@@ -1,35 +1,32 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useApp } from '@/hooks/use-app';
 import { Menu, X, Phone, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AuthModal } from './Modals';
 
 export default function Navbar() {
-  const { setView, user, setShowExpertModal } = useApp();
+  const { user, setShowExpertModal } = useApp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
+  // Order must match home page section order: Student Stories → FAQs → Blogs → Contact Us
   const navItems = [
-    { name: 'Student Stories', action: () => { setView('home'); setTimeout(() => document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' }), 100); } },
-    { name: 'Blogs', action: () => { setView('home'); setTimeout(() => document.getElementById('blogs')?.scrollIntoView({ behavior: 'smooth' }), 100); } },
-    { name: 'FAQs', action: () => { setView('home'); setTimeout(() => document.getElementById('faqs')?.scrollIntoView({ behavior: 'smooth' }), 100); } },
-    { name: 'Contact Us', action: () => { setView('home'); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100); } },
+    { name: 'Student Stories', href: '/#testimonials' },
+    { name: 'FAQs', href: '/#faqs' },
+    { name: 'Blogs', href: '/#blogs' },
+    { name: 'Contact Us', href: '/#contact' },
   ];
-
-  const handleGoHome = () => {
-    setView('home');
-  };
 
   return (
     <>
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <button 
-              type="button"
-              onClick={handleGoHome}
+            <Link
+              href="/"
               className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-lg p-1 -m-1"
               aria-label="Go to home"
             >
@@ -37,18 +34,19 @@ export default function Navbar() {
                 SR
               </div>
               <span className="text-2xl font-display font-bold text-primary tracking-tight">OPM</span>
-            </button>
+            </Link>
 
             {/* Desktop Nav - equal spacing, no Home/USD/INR */}
             <div className="hidden md:flex items-center flex-1 justify-evenly max-w-2xl mx-auto">
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.name}
-                  onClick={item.action}
+                  href={item.href}
                   className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
-                </button>
+                </Link>
               ))}
             </div>
             <div className="hidden md:flex items-center gap-4">
@@ -88,16 +86,14 @@ export default function Navbar() {
             >
               <div className="px-4 py-6 space-y-4">
                 {navItems.map((item) => (
-                  <button
+                  <Link
                     key={item.name}
+                    href={item.href}
                     className="block w-full text-left text-lg font-medium text-gray-600"
-                    onClick={() => {
-                      item.action();
-                      setIsMenuOpen(false);
-                    }}
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
-                  </button>
+                  </Link>
                 ))}
                 <div className="pt-4 border-t border-gray-100 flex flex-col space-y-4">
                   <button 

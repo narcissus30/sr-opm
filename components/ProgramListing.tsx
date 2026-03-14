@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useApp } from '@/hooks/use-app';
 import { PROGRAMS, Program } from '@/lib/data';
 import { Search, Filter, IndianRupee, Clock, ArrowRight, Plus, Globe, X, ChevronDown } from 'lucide-react';
@@ -15,7 +16,8 @@ const FEE_RANGES = [
 ];
 
 export default function ProgramListing() {
-  const { setView, setSelectedProgram, addToCompare, compareList, setShowExpertModal, currency } = useApp();
+  const router = useRouter();
+  const { setSelectedProgram, addToCompare, compareList, setShowExpertModal, currency } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedField, setSelectedField] = useState('All');
   const [selectedFee, setSelectedFee] = useState('all');
@@ -213,7 +215,7 @@ export default function ProgramListing() {
               </dl>
               <div className="flex items-center justify-between pt-4 pb-1 border-t border-gray-100">
                 <button
-                  onClick={() => { setSelectedProgram(p); setView('details'); }}
+                  onClick={() => { setSelectedProgram(p); router.push(`/programs/${p.id}`); }}
                   className="text-secondary font-semibold text-sm flex items-center gap-1 hover:underline"
                 >
                   View Details <ArrowRight size={14} />

@@ -180,6 +180,7 @@ export function ExpertModal() {
 export function AuthModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [phone, setPhone] = useState('');
+  const [resendSent, setResendSent] = useState(false);
   const { setUser } = useApp();
 
   if (!isOpen) return null;
@@ -240,7 +241,8 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
                 </div>
                 <div className="text-center text-sm">
                   <span className="text-gray-400">Didn&apos;t receive OTP? </span>
-                  <button className="text-secondary font-bold hover:underline">Resend</button>
+                  <button type="button" onClick={() => setResendSent(true)} className="text-secondary font-bold hover:underline">Resend</button>
+                  {resendSent && <span className="ml-2 text-accent text-xs">Code sent again</span>}
                 </div>
                 <button 
                   onClick={() => {

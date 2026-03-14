@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { useApp } from '@/hooks/use-app';
 import { PROGRAMS, Program } from '@/lib/data';
 import { ArrowLeft, Clock, IndianRupee, TrendingUp, GraduationCap, CheckCircle, Calendar, Download, Phone, Star, Users, Award, BookOpen, ArrowRight, Globe, Youtube, Instagram, MessageSquare, UserCheck, Briefcase, Plus } from 'lucide-react';
@@ -9,12 +10,14 @@ import Image from 'next/image';
 import { ExpertModal, EmployerPitchModal, AskAlumniModal } from './Modals';
 import { ROITooltip } from './ROITooltip';
 
-export default function ProgramDetailPage() {
-  const { selectedProgram, setView, isQuizCompleted, quizAnswers, setShowExpertModal, setShowEmployerPitchModal, setShowAskAlumniModal, setSelectedProgram, currency, addToCompare, compareList } = useApp();
+type ProgramDetailPageProps = { initialProgram?: Program };
 
-  if (!selectedProgram) return null;
+export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageProps) {
+  const router = useRouter();
+  const { selectedProgram, isQuizCompleted, quizAnswers, setShowExpertModal, setShowEmployerPitchModal, setShowAskAlumniModal, setSelectedProgram, currency, addToCompare, compareList } = useApp();
 
-  const p = selectedProgram;
+  const p = selectedProgram ?? initialProgram ?? null;
+  if (!p) return null;
 
   const similarPrograms = PROGRAMS
     .filter(item => item.id !== p.id && (item.field === p.field || item.field.split(' / ')[0] === p.field.split(' / ')[0]))
@@ -42,18 +45,18 @@ export default function ProgramDetailPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <button 
-        onClick={() => setView(isQuizCompleted ? 'results' : 'listing')}
+        onClick={() => router.push(isQuizCompleted ? '/results' : '/browse')}
         className="flex items-center space-x-2 text-gray-500 hover:text-primary font-medium mb-8 group"
       >
         <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
         <span>Back to {isQuizCompleted ? 'Recommendations' : 'Programs'}</span>
       </button>
 
-      {/* Hero Section - items-start to avoid empty space below accreditation/ROI */}
-      <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 mb-8 overflow-hidden relative">
-        <div className="grid lg:grid-cols-3 gap-12 relative z-10 items-start">
+      {/* Hero Section - compact layout to avoid empty space */}
+      <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 mb-6 overflow-hidden relative">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 relative z-10 items-start">
           <div className="lg:col-span-2 min-w-0">
-            <div className="flex items-center space-x-3 mb-6">
+            <div className="flex items-center space-x-3 mb-4">
               <span className="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">
                 {p.field}
               </span>
@@ -63,38 +66,38 @@ export default function ProgramDetailPage() {
               </span>
             </div>
             
-            <div className="flex items-center space-x-4 mb-6">
-              <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-gray-100 bg-white p-2">
+            <div className="flex items-center space-x-4 mb-4">
+              <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-gray-100 bg-white p-2 shrink-0">
                 <Image src={p.logo} alt={p.university} fill className="object-contain" referrerPolicy="no-referrer" />
               </div>
-              <div>
-                <h1 className="text-3xl md:text-5xl font-display font-bold text-primary leading-tight">
+              <div className="min-w-0">
+                <h1 className="text-2xl md:text-4xl font-display font-bold text-primary leading-tight">
                   {p.name} in {p.specialization}
                 </h1>
-                <p className="text-xl text-gray-500 font-medium">{p.university} · {p.country}</p>
+                <p className="text-lg text-gray-500 font-medium">{p.university} · {p.country}</p>
               </div>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-gray-50 p-4 rounded-2xl">
-                <div className="text-[10px] text-gray-400 uppercase font-bold mb-1">Duration</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+              <div className="bg-gray-50 p-3 rounded-xl">
+                <div className="text-[10px] text-gray-400 uppercase font-bold mb-0.5">Duration</div>
                 <div className="font-bold text-primary text-sm">{p.duration}</div>
               </div>
-              <div className="bg-gray-50 p-4 rounded-2xl">
-                <div className="text-[10px] text-gray-400 uppercase font-bold mb-1">Weekly Effort</div>
+              <div className="bg-gray-50 p-3 rounded-xl">
+                <div className="text-[10px] text-gray-400 uppercase font-bold mb-0.5">Weekly Effort</div>
                 <div className="font-bold text-primary text-sm">{p.weeklyTime}/week</div>
               </div>
-              <div className="bg-gray-50 p-4 rounded-2xl">
-                <div className="text-[10px] text-gray-400 uppercase font-bold mb-1">Total Fee</div>
+              <div className="bg-gray-50 p-3 rounded-xl">
+                <div className="text-[10px] text-gray-400 uppercase font-bold mb-0.5">Total Fee</div>
                 <div className="font-bold text-primary text-sm">{formatPrice(p)}</div>
               </div>
-              <div className="bg-gray-50 p-4 rounded-2xl">
-                <div className="text-[10px] text-gray-400 uppercase font-bold mb-1">EMI Starts</div>
+              <div className="bg-gray-50 p-3 rounded-xl">
+                <div className="text-[10px] text-gray-400 uppercase font-bold mb-0.5">EMI Starts</div>
                 <div className="font-bold text-accent text-sm">{formatEMI(p).replace('EMI starts from ', '')}</div>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 pt-2 mb-0">
+            <div className="flex flex-wrap items-center gap-3 pt-1">
               <div className="flex items-center gap-2">
                 <Award className="text-secondary shrink-0" size={18} />
                 <span className="text-sm font-semibold text-primary">{p.accreditation.split(',')[0]}</span>
@@ -105,27 +108,31 @@ export default function ProgramDetailPage() {
             </div>
           </div>
 
-          <div className="bg-primary rounded-3xl p-8 text-white flex flex-col justify-between shadow-2xl shadow-primary/20">
+          <div className="bg-primary rounded-2xl p-6 text-white flex flex-col shadow-2xl shadow-primary/20">
             <div>
-              <div className="text-accent font-bold text-sm uppercase tracking-widest mb-4">Admissions Open</div>
-              <div className="text-3xl font-bold mb-2">Deadline: {p.nextCohort}</div>
-              <p className="text-white/70 text-sm mb-8">Limited seats available for the upcoming cohort. Start your application today.</p>
+              <div className="text-accent font-bold text-xs uppercase tracking-widest mb-2">Admissions Open</div>
+              <div className="text-2xl font-bold mb-1">Deadline: {p.nextCohort}</div>
+              <p className="text-white/70 text-sm mb-5">Limited seats available for the upcoming cohort. Start your application today.</p>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3">
               <button 
                 onClick={() => setShowExpertModal(true)}
-                className="w-full bg-accent hover:bg-accent/90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-accent/20"
+                className="w-full bg-accent hover:bg-accent/90 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-accent/20"
               >
                 Apply Now
               </button>
-              <button className="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center space-x-2">
+              <button
+                type="button"
+                onClick={() => setShowExpertModal(true)}
+                className="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center space-x-2"
+              >
                 <Download size={18} />
                 <span>Download Brochure</span>
               </button>
             </div>
             
-            <div className="mt-8 pt-6 border-t border-white/10">
-              <div className="flex items-center space-x-3 mb-4">
+            <div className="mt-5 pt-4 border-t border-white/10">
+              <div className="flex items-center space-x-3 mb-3">
                 <div className="flex -space-x-3">
                   {[1, 2, 3].map(i => (
                     <div key={i} className="w-8 h-8 rounded-full border-2 border-primary overflow-hidden relative">
@@ -136,14 +143,19 @@ export default function ProgramDetailPage() {
                     +39
                   </div>
                 </div>
-                <div className="text-sm font-medium">
+                <div className="text-xs font-medium">
                   <span className="font-bold">42 professionals</span> from India are shortlisting this cohort
                 </div>
               </div>
-              <button className="w-full bg-white/5 hover:bg-white/10 border border-white/20 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center space-x-2 text-sm">
+              <a
+                href="https://wa.me/1234567890"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-white/5 hover:bg-white/10 border border-white/20 text-white font-bold py-2.5 rounded-xl transition-all flex items-center justify-center space-x-2 text-sm"
+              >
                 <MessageSquare size={16} />
                 <span>Join Explorer Group (WhatsApp)</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -340,8 +352,12 @@ export default function ProgramDetailPage() {
                     <Download className="text-gray-400 group-hover:text-secondary" />
                     <span>Upload Resume (PDF)</span>
                   </button>
-                  <button className="flex-1 bg-[#0077b5] text-white text-sm font-bold py-4 rounded-xl transition-all flex items-center justify-center space-x-2 hover:bg-[#006396] shadow-md">
-                     <span>Connect LinkedIn</span>
+                  <button
+                    type="button"
+                    onClick={() => window.open('https://www.linkedin.com/', '_blank', 'noopener,noreferrer')}
+                    className="flex-1 bg-[#0077b5] text-white text-sm font-bold py-4 rounded-xl transition-all flex items-center justify-center space-x-2 hover:bg-[#006396] shadow-md"
+                  >
+                    <span>Connect LinkedIn</span>
                   </button>
                 </div>
               </div>
@@ -547,7 +563,7 @@ export default function ProgramDetailPage() {
                       </dl>
                       <div className="flex items-center justify-between pt-3 pb-4 border-t border-gray-100 mt-auto">
                         <button
-                          onClick={() => { setSelectedProgram(simP); setView('details'); }}
+                          onClick={() => { setSelectedProgram(simP); router.push(`/programs/${simP.id}`); }}
                           className="text-secondary font-semibold text-sm hover:underline flex items-center gap-1"
                         >
                           View Program <ArrowRight size={14} />

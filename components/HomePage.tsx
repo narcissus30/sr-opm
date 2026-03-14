@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { useApp } from '@/hooks/use-app';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
 import { ArrowRight, CheckCircle, TrendingUp, Globe, Clock, Award } from 'lucide-react';
 import { TESTIMONIALS, FAQS } from '@/lib/data';
@@ -9,7 +9,16 @@ import { TESTIMONIALS, FAQS } from '@/lib/data';
 import Image from 'next/image';
 
 export default function HomePage() {
-  const { setView } = useApp();
+  const router = useRouter();
+
+  // Scroll to hash on load (e.g. /#blogs from /blogs redirect)
+  useEffect(() => {
+    const hash = typeof window !== 'undefined' ? window.location.hash.slice(1) : '';
+    if (hash) {
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
 
   const benefits = [
     { title: 'Flexible schedule', icon: <Clock className="text-accent" />, desc: 'Learn at your own pace while working.' },
@@ -56,14 +65,14 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button 
-                onClick={() => setView('quiz')}
+                onClick={() => router.push('/quiz')}
                 className="btn-secondary text-lg px-10 py-4 flex items-center space-x-2 group shadow-xl shadow-secondary/20"
               >
                 <span>Begin Quiz</span>
                 <ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button 
-                onClick={() => setView('listing')}
+                onClick={() => router.push('/browse')}
                 className="btn-outline text-lg px-10 py-4"
               >
                 Browse Programs
@@ -119,7 +128,7 @@ export default function HomePage() {
               <p className="text-gray-300 max-w-md">Find specialized programs in the most in-demand fields globally.</p>
             </div>
             <button 
-              onClick={() => setView('listing')}
+              onClick={() => router.push('/browse')}
               className="text-accent font-bold flex items-center space-x-2 hover:underline"
             >
               <span>View all categories</span>
@@ -130,7 +139,7 @@ export default function HomePage() {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setView('listing')}
+                onClick={() => router.push('/browse')}
                 className="px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/20 rounded-2xl font-bold transition-all"
               >
                 {cat}
@@ -200,7 +209,11 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest from our Blog</h2>
             <p className="text-gray-500">Expert insights on global education and career trends.</p>
           </div>
-          <button className="text-primary font-bold flex items-center space-x-2 hover:underline">
+          <button
+            type="button"
+            onClick={() => document.getElementById('blogs')?.scrollIntoView({ behavior: 'smooth' })}
+            className="text-primary font-bold flex items-center space-x-2 hover:underline"
+          >
             <span>View all posts</span>
             <ArrowRight size={20} />
           </button>
@@ -211,7 +224,12 @@ export default function HomePage() {
             { title: "How to balance work and a Master's degree", date: "Nov 05, 2025", category: "Tips", img: "https://picsum.photos/seed/work/400/250" },
             { title: "Top 5 Data Science programs for 2026", date: "Dec 01, 2025", category: "Data Science", img: "https://picsum.photos/seed/ds/400/250" }
           ].map((blog, i) => (
-            <div key={i} className="group cursor-pointer">
+            <button
+              key={i}
+              type="button"
+              onClick={() => document.getElementById('blogs')?.scrollIntoView({ behavior: 'smooth' })}
+              className="group cursor-pointer text-left w-full"
+            >
               <div className="relative h-56 rounded-2xl overflow-hidden mb-4">
                 <Image 
                   src={blog.img} 
@@ -226,7 +244,7 @@ export default function HomePage() {
               </div>
               <div className="text-sm text-gray-400 mb-2">{blog.date}</div>
               <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{blog.title}</h3>
-            </div>
+            </button>
           ))}
         </div>
       </section>

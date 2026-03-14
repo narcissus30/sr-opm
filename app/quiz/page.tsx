@@ -1,10 +1,10 @@
 import MainLayout from '@/components/MainLayout';
-import HomePage from '@/components/HomePage';
+import QuizFlow from '@/components/QuizFlow';
 
-export default function Page() {
+export default function QuizPage() {
   return (
     <MainLayout>
-      <HomePage />
+      <QuizFlow />
     </MainLayout>
   );
 }

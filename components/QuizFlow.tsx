@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useApp } from '@/hooks/use-app';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
@@ -45,7 +46,8 @@ const QUESTIONS = [
 ];
 
 export default function QuizFlow() {
-  const { quizAnswers, setQuizAnswers, setView, setIsQuizCompleted } = useApp();
+  const router = useRouter();
+  const { quizAnswers, setQuizAnswers, setIsQuizCompleted } = useApp();
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -58,7 +60,7 @@ export default function QuizFlow() {
       setCurrentStep(currentStep + 1);
     } else {
       setIsQuizCompleted(true);
-      setView('results');
+      router.push('/results');
     }
   };
 
@@ -67,7 +69,7 @@ export default function QuizFlow() {
       setDirection(-1);
       setCurrentStep(currentStep - 1);
     } else {
-      setView('home');
+      router.push('/');
     }
   };
 

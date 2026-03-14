@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
+import { AppProvider } from '@/hooks/use-app';
 import './globals.css';
 
 const inter = Inter({
@@ -21,7 +22,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body suppressHydrationWarning className="bg-[#F7F9FC] text-[#1A1A1A] font-sans">
-        {children}
+        <AppProvider>
+          {children}
+        </AppProvider>
       </body>
     </html>
   );
