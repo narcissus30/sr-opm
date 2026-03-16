@@ -9,6 +9,7 @@ import { motion } from 'motion/react';
 import Image from 'next/image';
 import { ExpertModal, EmployerPitchModal, AskAlumniModal } from './Modals';
 import { ROITooltip } from './ROITooltip';
+import DegreePreview from '@/components/DegreePreview';
 
 type ProgramDetailPageProps = { initialProgram?: Program };
 
@@ -275,6 +276,74 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
                   <span className="font-medium text-gray-700">{h}</span>
                 </div>
               ))}
+            </div>
+          </section>
+
+          {/* Degree Preview / Value Proposition */}
+          <section className="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm relative overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute -top-24 -left-24 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+              <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-secondary/5 rounded-full blur-3xl" />
+            </div>
+
+            <div className="relative z-10 grid lg:grid-cols-2 gap-8 xl:gap-10 items-center">
+              <div className="order-2 lg:order-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
+                    <GraduationCap size={20} />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-secondary">Value Proposition</span>
+                </div>
+
+                <h2 className="text-2xl md:text-3xl font-bold text-primary mb-3">
+                  Get a Prestigious Degree
+                </h2>
+                <p className="text-gray-600 leading-relaxed mb-5 max-w-xl text-sm md:text-base">
+                  A globally recognized credential that you can share with employers, add on LinkedIn, and use for higher studies—without pausing your career.
+                </p>
+
+                <div className="space-y-4">
+                  {[
+                    {
+                      title: 'Globally recognized',
+                      desc: 'Graduate with internationally accepted online degrees and credentials.',
+                    },
+                    {
+                      title: 'At par with on‑campus degrees',
+                      desc: 'Same academic rigor, recognition, and career outcomes—built for working professionals.',
+                    },
+                  ].map((item) => (
+                    <div key={item.title} className="flex gap-3 p-3.5 rounded-2xl border border-gray-100 bg-gray-50/60">
+                      <div className="w-9 h-9 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-primary shrink-0">
+                        <CheckCircle size={16} className="text-accent" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-primary text-sm md:text-base">{item.title}</div>
+                        <div className="text-xs md:text-sm text-gray-600">{item.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative order-1 lg:order-2">
+                <div className="absolute -top-3 -right-3 bg-white/90 backdrop-blur-sm border border-gray-100 rounded-full px-3 py-1 text-[11px] font-bold text-gray-500">
+                  Sample
+                </div>
+                <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-gray-100 shadow-xl bg-white max-w-xl mx-auto">
+                  <DegreePreview
+                    programName={p.name}
+                    specialization={p.specialization}
+                    university={p.university}
+                    learnerName="Sample Name"
+                    issueDateLabel={p.nextCohort}
+                    className="w-full h-auto"
+                  />
+                </div>
+                <div className="mt-2 text-[11px] md:text-xs text-gray-400 text-center">
+                  Preview your certificate format (illustrative).
+                </div>
+              </div>
             </div>
           </section>
 
