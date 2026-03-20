@@ -103,7 +103,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "45%",
     country: "UK",
     accreditation: "AACSB, AMBA, UGC Recognized",
-    nextCohort: "Aug 2026",
+    nextCohort: "1st August 2026",
     description: "A comprehensive MBA program designed for future business leaders with a focus on global strategy and innovation.",
     eligibility: [
       "Bachelor's Degree from a recognized university with at least 50% aggregate marks",
@@ -200,7 +200,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "60%",
     country: "Germany",
     accreditation: "FIBAA, EQAR",
-    nextCohort: "Sep 2026",
+    nextCohort: "1st September 2026",
     description: "Master the tools of tomorrow with deep dives into Machine Learning, Big Data, and Neural Networks.",
     eligibility: [
       "Undergraduate degree in STEM (Science, Technology, Engineering, Mathematics) or related field",
@@ -259,7 +259,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "50%",
     country: "India",
     accreditation: "NAAC A+, UGC",
-    nextCohort: "July 2026",
+    nextCohort: "1st July 2026",
     description: "Gain expertise in AI and ML with a curriculum designed by industry experts and academic veterans.",
     eligibility: [
       "Bachelor's degree in any stream with Mathematics at 10+2 or Graduation level",
@@ -353,7 +353,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "55%",
     country: "USA",
     accreditation: "HLC, NSA Center of Excellence",
-    nextCohort: "Aug 2026",
+    nextCohort: "1st August 2026",
     description: "Protect global infrastructures with advanced training in network security, digital forensics, and risk management.",
     eligibility: [
       "Bachelor's degree in IT, Computer Science, or related field",
@@ -410,7 +410,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "25%",
     country: "India",
     accreditation: "UGC, WASC, DEB",
-    nextCohort: "June 2026",
+    nextCohort: "1st June 2026",
     description: "Affordable and flexible finance degree for professionals in accounting and corporate finance.",
     eligibility: [
       "Bachelor's degree in Commerce, Economics, or related field",
@@ -471,7 +471,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "35%",
     country: "Switzerland",
     accreditation: "ACBSP, EduQua",
-    nextCohort: "Oct 2026",
+    nextCohort: "1st October 2026",
     description: "Prepare for leadership roles in the global healthcare industry with a focus on quality, safety, and efficiency.",
     eligibility: [
       "Bachelor's degree in Healthcare, Life Sciences, or Business",
@@ -520,7 +520,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "50%",
     country: "France",
     accreditation: "EQUIS, AACSB, AMBA",
-    nextCohort: "Sep 2026",
+    nextCohort: "1st September 2026",
     description: "A high-impact program designed to master the digital landscape, from social media strategy to advanced e-commerce analytics.",
     eligibility: [
       "Bachelor's degree in any discipline",
@@ -577,7 +577,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "65%",
     country: "USA",
     accreditation: "AACSB, Ranked #1 in US for SCM",
-    nextCohort: "Jan 2027",
+    nextCohort: "1st January 2027",
     description: "Join the world's leading supply chain program and learn to manage complex global networks using data and technology.",
     eligibility: [
       "Bachelor's degree with strong quantitative background",
@@ -634,7 +634,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "75%",
     country: "USA",
     accreditation: "SACSCOC, AACSB",
-    nextCohort: "Aug 2026",
+    nextCohort: "1st August 2026",
     description: "Bridge the gap between business, technology, and design to build products that users love and businesses need.",
     eligibility: [
       "Bachelor's degree in Engineering, Design, or Business",
@@ -718,7 +718,7 @@ export const PROGRAMS: Program[] = [
     avgSalaryIncrease: "20%",
     country: "India",
     accreditation: "UGC, NAAC A++",
-    nextCohort: "July 2026",
+    nextCohort: "1st July 2026",
     description: "A deeply impactful program for those looking to build a career in mental health and counseling.",
     eligibility: [
       "Bachelor's degree in any stream (Psychology preferred)",

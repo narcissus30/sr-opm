@@ -532,23 +532,7 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
               </div>
               <p className="text-gray-600 mb-8">Graduates from this program have been placed in top global firms including Google, Amazon, Deloitte, and more.</p>
               
-              {p.careerTransitions && (
-                <div className="mb-10">
-                  <h4 className="text-lg font-bold text-primary mb-6 flex items-center space-x-2">
-                    <Briefcase size={20} className="text-secondary" />
-                    <span>Career Transitions After Program</span>
-                  </h4>
-                  <div className="grid md:grid-cols-2 gap-4 mb-6">
-                    {p.careerTransitions.map((t, i) => (
-                      <div key={i} className="bg-white p-4 rounded-xl border border-gray-100 flex items-center justify-between shadow-sm">
-                        <div className="text-sm font-medium text-gray-500">{t.before}</div>
-                        <ArrowRight size={16} className="text-secondary mx-4" />
-                        <div className="text-sm font-bold text-primary">{t.after}</div>
-                      </div>
-                    ))}
-                  </div>
 
-                  {/* Learner success stories */}
                   <div className="mt-2">
                     <div className="flex items-center justify-between gap-4 mb-4">
                       <h4 className="text-lg font-bold text-primary">Success Stories</h4>
@@ -659,9 +643,6 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
                                   <div className="text-sm font-bold text-primary leading-snug">{learner.before}</div>
                                   <div className="text-[11px] text-gray-500 mt-1">From role</div>
                                 </div>
-                                <div className="w-10 h-10 rounded-2xl bg-secondary/10 border border-secondary/20 text-secondary flex items-center justify-center font-black text-xs shrink-0">
-                                  {learner.fromBadge}
-                                </div>
                               </div>
                             </div>
 
@@ -676,9 +657,6 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
                                 <div>
                                   <div className="text-sm font-bold text-secondary leading-snug">{learner.after}</div>
                                   <div className="text-[11px] text-gray-500 mt-1">To role</div>
-                                </div>
-                                <div className="w-10 h-10 rounded-2xl bg-secondary/10 border border-secondary/20 text-accent flex items-center justify-center font-black text-xs shrink-0">
-                                  {learner.toBadge}
                                 </div>
                               </div>
                             </div>
@@ -695,8 +673,6 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
                       ))}
                     </div>
                   </div>
-                </div>
-              )}
 
               <div className="mb-6">
                 <h4 className="text-lg font-bold text-primary mb-4">Future roles options can be:</h4>
