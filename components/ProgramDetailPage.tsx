@@ -555,7 +555,7 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
                       <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Illustrative examples</span>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-6">
+                    <div className="grid md:grid-cols-2 gap-6">
                       {[
                         {
                           name: 'Ashish Agarwal',
@@ -617,7 +617,7 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
                           fromBadge: 'OM',
                           toBadge: 'BA',
                         },
-                      ].map((learner) => (
+                      ].slice(0, 4).map((learner) => (
                         <div
                           key={learner.name}
                           className="bg-white rounded-3xl border border-gray-200 p-7 shadow-sm relative overflow-hidden"

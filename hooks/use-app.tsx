@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import { Program, PROGRAMS } from '@/lib/data';
 
 interface QuizAnswers {
@@ -48,6 +48,15 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   const [view, setViewState] = useState<'home' | 'quiz' | 'results' | 'details' | 'listing'>('home');
   const setView = (v: 'home' | 'quiz' | 'results' | 'details' | 'listing') => {
     setViewState(v);
