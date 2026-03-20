@@ -347,6 +347,71 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
             </div>
           </section>
 
+          {/* Unique & Career-Ready Highlights */}
+          <section className="mt-6">
+            <h2 className="text-3xl font-bold text-primary mb-8 text-center">
+              What Makes This Product Management Programme Unique and Career-Ready?
+            </h2>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: '140+ Pre-recorded videos',
+                  desc: 'for self-paced learning from globally renowned ISB Faculty.',
+                  icon: Youtube,
+                },
+                {
+                  title: 'Live masterclasses',
+                  desc: 'on applications of AI and Generative AI in product management.',
+                  icon: BookOpen,
+                },
+                {
+                  title: 'Cutting-edge modules',
+                  desc: 'on AI and Generative AI in product management.',
+                  icon: Star,
+                },
+                {
+                  title: '11 Top tools',
+                  desc: 'product management tools to sharpen execution.',
+                  icon: Award,
+                },
+                {
+                  title: '10 Masterclasses',
+                  desc: 'with leading product managers.',
+                  icon: Users,
+                },
+                {
+                  title: '4 Case studies',
+                  desc: 'to build real-world decision making skills.',
+                  icon: BookOpen,
+                },
+                {
+                  title: '20+ Assignments & quizzes',
+                  desc: 'to validate learning and strengthen fundamentals.',
+                  icon: CheckCircle,
+                },
+                {
+                  title: '15 Live sessions',
+                  desc: 'with Programme Leaders to guide your progress.',
+                  icon: Clock,
+                },
+                {
+                  title: 'ISB Online Network',
+                  desc: 'Be part of a peer community and stay connected.',
+                  icon: Globe,
+                },
+              ].map((item) => (
+                <div key={item.title} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm text-center">
+                  <div className="w-12 h-12 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center mx-auto mb-4">
+                    <item.icon size={22} />
+                  </div>
+                  <div className="font-bold text-primary mb-2 text-sm">{item.title}</div>
+                  <div className="text-xs text-gray-600 leading-relaxed">{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           <section>
             <h2 className="text-3xl font-bold text-primary mb-6">Curriculum</h2>
             <p className="text-gray-600 mb-6">Semester-wise breakdown of courses and topics.</p>
@@ -482,30 +547,152 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
                       </div>
                     ))}
                   </div>
-                  
-                  {/* Transition Match Alumni Card */}
-                  <div className="bg-white rounded-2xl border border-gray-200 p-6 flex flex-col md:flex-row items-center md:items-start justify-between gap-6 shadow-sm relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
-                    <div className="flex items-start space-x-5 relative z-10 w-full">
-                      <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-sm relative">
-                        <Image src="https://picsum.photos/seed/rohan/100/100" alt="Alumnus" fill className="object-cover" referrerPolicy="no-referrer" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <h4 className="font-bold text-primary text-lg">Meet Rohan</h4>
-                          <span className="bg-green-100 text-green-700 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full">Alumni</span>
-                        </div>
-                        <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                          He went from <span className="font-bold text-primary">QA Engineer</span> to <span className="font-bold text-secondary">ML Engineer</span> through this exact program in 2024.
-                        </p>
-                        <button 
-                          onClick={() => setShowAskAlumniModal(true)}
-                          className="flex items-center space-x-2 text-primary font-bold bg-gray-50 hover:bg-gray-100 border border-gray-200 px-4 py-2 rounded-xl text-sm transition-colors"
+
+                  {/* Learner success stories */}
+                  <div className="mt-2">
+                    <div className="flex items-center justify-between gap-4 mb-4">
+                      <h4 className="text-lg font-bold text-primary">Success Stories</h4>
+                      <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Illustrative examples</span>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-6">
+                      {[
+                        {
+                          name: 'Ashish Agarwal',
+                          experience: '10 Years of Experience',
+                          before: 'Assistant Manager',
+                          after: 'Standards & Regulation Manager',
+                          year: '2024',
+                          avatarSeed: 'ashish',
+                          fromBadge: 'S',
+                          toBadge: 'R',
+                        },
+                        {
+                          name: 'Vivek Chandra',
+                          experience: '14.5 Years of Experience',
+                          before: 'Senior Lead Software Engineer (L5)',
+                          after: 'Founder & Director',
+                          year: '2025',
+                          avatarSeed: 'vivek',
+                          fromBadge: 'L5',
+                          toBadge: 'F',
+                        },
+                        {
+                          name: 'Vishal Nihalani',
+                          experience: '2.5 Years of Experience',
+                          before: 'Deputy Branch Manager',
+                          after: 'Manager, Product & Partnerships',
+                          year: '2024',
+                          avatarSeed: 'vishal',
+                          fromBadge: 'D',
+                          toBadge: 'P',
+                        },
+                        {
+                          name: 'Rohan Mehta',
+                          experience: '6 Years of Experience',
+                          before: 'QA Engineer',
+                          after: 'ML Engineer',
+                          year: '2024',
+                          avatarSeed: 'rohan',
+                          fromBadge: 'QA',
+                          toBadge: 'ML',
+                        },
+                        {
+                          name: 'Ananya Sharma',
+                          experience: '4 Years of Experience',
+                          before: 'Data Analyst',
+                          after: 'Product Analyst',
+                          year: '2025',
+                          avatarSeed: 'ananya',
+                          fromBadge: 'DA',
+                          toBadge: 'PA',
+                        },
+                        {
+                          name: 'Meera Iyer',
+                          experience: '8 Years of Experience',
+                          before: 'Operations Manager',
+                          after: 'Business Analyst',
+                          year: '2023',
+                          avatarSeed: 'meera',
+                          fromBadge: 'OM',
+                          toBadge: 'BA',
+                        },
+                      ].map((learner) => (
+                        <div
+                          key={learner.name}
+                          className="bg-white rounded-3xl border border-gray-200 p-7 shadow-sm relative overflow-hidden"
                         >
-                          <MessageSquare size={16} className="text-secondary" />
-                          <span>Request a 15-min AMA</span>
-                        </button>
-                      </div>
+                          <div className="absolute -top-10 -right-10 w-28 h-28 bg-secondary/5 rounded-full blur-2xl" />
+
+                          <div className="relative z-10 flex items-start gap-4">
+                            <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-sm relative">
+                              <Image
+                                src={`https://picsum.photos/seed/${learner.avatarSeed}/100/100`}
+                                alt={`${learner.name} avatar`}
+                                fill
+                                className="object-cover"
+                                referrerPolicy="no-referrer"
+                              />
+                            </div>
+
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-3">
+                                <h4 className="font-bold text-primary text-lg leading-tight">{learner.name}</h4>
+                                <span className="bg-green-100 text-green-700 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full shrink-0">
+                                  Alumni
+                                </span>
+                              </div>
+
+                              <div className="mt-2 flex items-center justify-between gap-3">
+                                <div className="text-xs text-gray-500 font-bold">{learner.experience}</div>
+                                <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                                  {learner.year}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-6 relative z-10 flex flex-col gap-4">
+                            <div className="bg-gray-50 border border-gray-100 rounded-2xl p-4">
+                              <div className="flex items-start justify-between gap-3">
+                                <div>
+                                  <div className="text-sm font-bold text-primary leading-snug">{learner.before}</div>
+                                  <div className="text-[11px] text-gray-500 mt-1">From role</div>
+                                </div>
+                                <div className="w-10 h-10 rounded-2xl bg-secondary/10 border border-secondary/20 text-secondary flex items-center justify-center font-black text-xs shrink-0">
+                                  {learner.fromBadge}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-center gap-4">
+                              <div className="h-px flex-1 bg-gray-200" />
+                              <ArrowRight size={18} className="text-secondary shrink-0" />
+                              <div className="h-px flex-1 bg-gray-200" />
+                            </div>
+
+                            <div className="bg-secondary/5 border border-secondary/10 rounded-2xl p-4">
+                              <div className="flex items-start justify-between gap-3">
+                                <div>
+                                  <div className="text-sm font-bold text-secondary leading-snug">{learner.after}</div>
+                                  <div className="text-[11px] text-gray-500 mt-1">To role</div>
+                                </div>
+                                <div className="w-10 h-10 rounded-2xl bg-secondary/10 border border-secondary/20 text-accent flex items-center justify-center font-black text-xs shrink-0">
+                                  {learner.toBadge}
+                                </div>
+                              </div>
+                            </div>
+
+                            <button
+                              onClick={() => setShowAskAlumniModal(true)}
+                              className="w-full flex items-center justify-center space-x-2 text-primary font-bold bg-gray-50 hover:bg-gray-100 border border-gray-200 px-4 py-3 rounded-2xl text-sm transition-colors"
+                            >
+                              <MessageSquare size={16} className="text-secondary" />
+                              <span>Request a 15-min AMA</span>
+                            </button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -521,6 +708,64 @@ export default function ProgramDetailPage({ initialProgram }: ProgramDetailPageP
                   ))}
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Meet the Faculty */}
+          <section className="mt-6">
+            <h2 className="text-3xl font-bold text-primary mb-6">
+              Meet the Faculty Behind the {p.name} Programme
+            </h2>
+            <p className="text-gray-600 mb-8 max-w-2xl">
+              A blend of experienced educators and industry leaders guiding you through applied learning and career-ready outcomes.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                {
+                  name: 'Dr. Rajendra Srivastava',
+                  title: 'Professor, Marketing Strategy & Innovation',
+                  bio: 'Senior faculty with deep experience in building data-driven go-to-market strategies and leadership frameworks.',
+                  avatarSeed: 'rajendra',
+                },
+                {
+                  name: 'Manish Gangwar',
+                  title: 'Associate Professor, Product Management & Analytics',
+                  bio: 'Guides learners through practical product thinking, experimentation, and measurable decision making.',
+                  avatarSeed: 'manish',
+                },
+                {
+                  name: 'Dr. Priya Kapoor',
+                  title: 'Professor of Practice, AI & Product Strategy',
+                  bio: 'Focuses on applying Generative AI responsibly and turning insights into product execution.',
+                  avatarSeed: 'priya',
+                },
+                {
+                  name: 'Arjun Mehta',
+                  title: 'Adjunct Faculty, Growth, Pricing & Lifecycle',
+                  bio: 'Helps learners master customer-centric metrics, pricing strategy, and growth operations.',
+                  avatarSeed: 'arjun',
+                },
+              ].map((faculty) => (
+                <div key={faculty.name} className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+                  <div className="p-6 flex gap-5 items-start">
+                    <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-100 shrink-0 relative bg-gray-50">
+                      <Image
+                        src={`https://picsum.photos/seed/${faculty.avatarSeed}/160/160`}
+                        alt={`${faculty.name} photo`}
+                        fill
+                        className="object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-primary font-bold text-lg">{faculty.name}</div>
+                      <div className="text-sm font-semibold text-gray-600 mt-1">{faculty.title}</div>
+                      <p className="text-sm text-gray-600 mt-3 leading-relaxed line-clamp-3">{faculty.bio}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 
